@@ -120,8 +120,8 @@
   function renderCore(container) {
     var W = container.clientWidth;
     var narrow = W < 620;
-    var labelW = narrow ? 0 : 236;
-    var rowH = narrow ? 56 : 44;
+    var labelW = narrow ? 0 : 212;
+    var rowH = narrow ? 50 : 40;
     var top = 24, bottom = 50, right = 54, left = labelW + 8;
     var H = top + rowH * CORE.length + bottom;
     var x = lin(0.45, 1.0, left, W - right);
@@ -144,17 +144,17 @@
 
     CORE.forEach(function (d, i) {
       var y0 = top + i * rowH;
-      var cy = narrow ? y0 + 38 : y0 + rowH / 2;
+      var cy = narrow ? y0 + 34 : y0 + rowH / 2;
       var hit = s("rect", { x: 0, y: y0, width: W, height: rowH, rx: 6, class: "row-hit" }, hits);
       hit.setAttribute("aria-label", d.src + " " + d.geom + ": readiness " + f3(d.ready) + ", confidence " + f3(d.conf) + ", visual layer-0 " + f3(d.vis) + ", shuffle " + f3(d.shuffle));
 
       var name = d.src + (d.dag ? "†" : "");
       if (narrow) {
-        var t1 = halo(txt(marks, 4, y0 + 17, name, "row-label", "start"));
+        var t1 = halo(txt(marks, 4, y0 + 15, name, "row-label", "start"));
         var t2 = s("tspan", { class: "row-sub", dx: 6 }, t1); t2.textContent = d.geom + " · " + d.label;
       } else {
-        txt(marks, 4, cy - 4, name, "row-label", "start");
-        txt(marks, 4, cy + 14, d.geom + " · " + d.label, "row-sub", "start");
+        txt(marks, 4, cy - 3, name, "row-label", "start");
+        txt(marks, 4, cy + 12, d.geom + " · " + d.label, "row-sub", "start");
       }
 
       var all = [d.shuffle, d.conf, d.vis, d.ready];

@@ -215,7 +215,7 @@
       </div>
 
       <div class="prose">
-        <p style="margin-top:22px">
+        <p style="margin-top:18px">
           Nothing in how these models are trained asks them to represent readiness: next-token prediction supervises what to
           say, not whether the frames delivered so far settle the question. A model could reach high accuracy on complete
           clips without ever forming it. <strong>Frozen VideoLLMs form it anyway.</strong>
@@ -297,7 +297,7 @@
         </p>
       </div>
 
-      <div class="cards two" style="margin-top:14px">
+      <div class="cards two" style="margin-top:12px">
         <div class="card hue-sky">
           <span class="tag">The readout</span>
           <h4>A probe tests linear availability. It does not teach readiness.</h4>
@@ -413,7 +413,7 @@
       </div>
 
       <div class="prose">
-        <p style="margin-top:28px">
+        <p style="margin-top:22px">
           <strong>On natural footage, the signal rises with how much evidence has arrived.</strong> On ST-Evidence-Gen,
           where a question has 1&ndash;11 evidence segments, readiness rises with the fraction of segments seen even after
           controlling for video progress (partial &rho; = 0.378). A donor question on byte-identical frames collapses
@@ -443,7 +443,7 @@
           <span class="pill">Pixtral-12B</span>
         </div>
       </div>
-      <figure style="margin:28px 0 0">
+      <figure style="margin:22px 0 0">
         <div class="paper-fig">
           <a href="static/images/depth.png" target="_blank" rel="noopener" aria-label="Open the full-size depth figure"><picture>
             <source srcset="static/images/depth.webp" type="image/webp">
@@ -460,7 +460,7 @@
       </figure>
 
       <div class="prose">
-        <p style="margin-top:28px">
+        <p style="margin-top:22px">
           <strong>Ranking transfers to unseen footage; the threshold does not.</strong> Fitted only on ST-Evidence-Gen
           footage and read on OVO-Bench's 42 unseen videos <em>without refitting</em>, the probe reaches AUROC
           <strong>0.748</strong> <span class="num">[0.689, 0.799]</span>, about 90% of the 0.832 a target-fitted probe
@@ -497,7 +497,7 @@
       </div>
 
       <div class="prose">
-        <p style="margin-top:28px">
+        <p style="margin-top:22px">
           <strong>Injected at one site, the direction turns deferral into an answer.</strong> Adding a rank-32 readiness
           subspace at a mid-depth residual site in Qwen3-VL-8B produces <strong>101</strong> deferral-to-answer flips,
           against 3 for a wrong-target direction of equal magnitude, monotone across four doses and above all 35 alternative
