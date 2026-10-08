@@ -301,7 +301,7 @@ figcaption strong, .caption strong { color: var(--ink); }
 .teaser figcaption { text-align: center; }
 
 .tldr {
-  margin: 30px auto 0; max-width: var(--measure); padding: 16px 20px; border-radius: var(--radius);
+  margin: 24px auto 0; max-width: var(--measure); padding: 16px 20px; border-radius: var(--radius);
   background: linear-gradient(120deg, color-mix(in srgb, var(--sky) 10%, var(--surface)), color-mix(in srgb, var(--teal) 11%, var(--surface)));
   border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--hair));
   font-size: 17px; line-height: 1.6;
@@ -339,15 +339,31 @@ p { margin: 0 0 14px; }
 .lead { font-size: 18px; color: var(--ink-2); line-height: 1.6; }
 @media (max-width: 640px) { .lead { font-size: 16.5px; } }
 
-.abstract {
-  padding: 24px 28px 12px; border-radius: var(--radius); box-shadow: var(--shadow);
+/* Abstract: a disclosure between the teaser and the stat tiles, collapsed by default. */
+details.abstract {
+  margin: 24px auto 0; max-width: var(--measure); text-align: left;
+  border-radius: var(--radius); box-shadow: var(--shadow);
   background: color-mix(in srgb, var(--hue, var(--accent)) 6%, var(--surface));
   border: 1px solid color-mix(in srgb, var(--hue, var(--accent)) 24%, var(--hair));
 }
-.abstract p { text-align: justify; hyphens: auto; }
+details.abstract summary {
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px;
+  padding: 13px 22px; border-radius: var(--radius);
+  font-family: var(--serif); font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);
+}
+details.abstract summary::-webkit-details-marker { display: none; }
+details.abstract summary::before {
+  content: "▸"; font-size: 14px; color: var(--hue-ink, var(--accent-ink)); transition: transform .15s ease;
+}
+details.abstract[open] summary::before { transform: rotate(90deg); }
+details.abstract summary:hover .hint { color: var(--hue-ink, var(--accent-ink)); }
+details.abstract .hint { margin-left: auto; font-family: var(--sans); font-size: 13.5px; font-weight: 600; color: var(--muted); }
+details.abstract .when-open, details.abstract[open] .when-closed { display: none; }
+details.abstract[open] .when-open { display: inline; }
+details.abstract p { margin: 0; padding: 0 28px 20px; text-align: justify; hyphens: auto; }
 @media (max-width: 640px) {
-  .abstract { padding: 18px 16px 6px; }
-  .abstract p { text-align: left; }
+  details.abstract summary { padding: 12px 16px; }
+  details.abstract p { padding: 0 16px 16px; text-align: left; }
 }
 
 /* ---------- stat tiles ---------- */

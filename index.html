@@ -79,11 +79,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5M8.5 13h7M8.5 17h5"/></svg>
           Paper
         </a>
-        <!-- TODO: replace with the arXiv abs link, e.g. https://arxiv.org/abs/XXXX.XXXXX, and swap class "soon" for "ghost". -->
-        <span class="btn soon" title="Link will be added when the preprint is live">
+        <a class="btn ghost" href="https://arxiv.org/abs/2610.08560" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13.5"/><path d="M4 19.5h16M8 8.5h8M8 12h8M8 15.5h5"/></svg>
-          arXiv <small>soon</small>
-        </span>
+          arXiv
+        </a>
         <!-- TODO: replace with the code repository link and swap class "soon" for "ghost". -->
         <span class="btn soon" title="Link will be added when the code is public">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5"/></svg>
@@ -95,6 +94,13 @@
         </a>
       </div>
       </div>
+
+      <p class="tldr" style="text-align:left">
+        <b>TL;DR</b>
+        Frozen VideoLLMs already compute whether the evidence for the <em>current question</em> has arrived.
+        A linear probe on the residual stream reads it in every model we tested. It flips when only the question changes,
+        it is not the model's confidence, and it tells a streaming model when to answer.
+      </p>
 
       <figure class="teaser">
         <!-- One render per page theme (tools/teaser/make_teaser_web.py); CSS shows the one matching the theme. -->
@@ -116,12 +122,31 @@
         </figcaption>
       </figure>
 
-      <p class="tldr" style="text-align:left">
-        <b>TL;DR</b>
-        Frozen VideoLLMs already compute whether the evidence for the <em>current question</em> has arrived.
-        A linear probe on the residual stream reads it in every model we tested. It flips when only the question changes,
-        it is not the model's confidence, and it tells a streaming model when to answer.
-      </p>
+      <!-- Collapsed by default; the "Abstract" nav link opens it (static/js/main.js). -->
+      <details class="abstract hue-teal" id="abstract">
+        <summary>
+          <span>Abstract</span>
+          <span class="hint"><span class="when-closed">Show</span><span class="when-open">Hide</span></span>
+        </summary>
+        <p>
+          Streaming video-language models must decide not only what to answer, but whether the evidence needed for the
+          current question has arrived. Existing systems learn that decision as a separate trigger; we ask whether an
+          unmodified model already computes it. We show that frozen VideoLLMs carry a linearly readable
+          <em>evidence-readiness</em> signal, labelled from timestamped evidence rather than from model output. It decodes in
+          all seven models of a shared byte-identical evaluation (AUROC 0.733&ndash;0.905 under the strictest not-ready
+          sampling, where a fitted clock is near chance), and a probe fitted without any of a benchmark family's footage
+          still reads that family. It is question-conditioned: on byte-identical windows, changing only the question
+          reverses the readout on 66.1% of pairs, while every question-blind control is at chance by construction. The
+          model can answer incorrectly and still encode readiness: AUROC remains 0.722 among wrong answers. Readiness also
+          beats uncertainty estimators and their supervised combination on latency-matched answer selection, and tracks
+          independent human judgments more closely than confidence. Released streaming triggers are also linear readouts,
+          yet a trained trigger read on its own base model's activations is approximately orthogonal to readiness and
+          decodes it far less accurately than a probe. We turn the readout into <em>Readiness Gating</em>, an answer-timing
+          policy that improves accuracy by up to +9.75&nbsp;pp at matched video duration with negligible computational
+          overhead. How much it gains varies with the accuracy headroom the task makes available: across 26 configurations
+          the gain tracks that headroom, and an intervention that moves it over identical pixels moves the gain with it.
+        </p>
+      </details>
 
       <div class="stats" style="text-align:left">
         <div class="stat hue-teal">
@@ -144,33 +169,6 @@
           <div class="value">+9.75<span class="unit">pp</span></div>
           <div class="desc">accuracy over confidence-gated answering at matched video duration, for a 1.06&nbsp;&micro;s dot product.</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== ABSTRACT ============================== -->
-  <section class="block hue-teal" id="abstract">
-    <div class="wrap">
-      <div class="prose abstract">
-        <h2>Abstract</h2>
-        <p>
-          Streaming video-language models must decide not only what to answer, but whether the evidence needed for the
-          current question has arrived. Existing systems learn that decision as a separate trigger; we ask whether an
-          unmodified model already computes it. We show that frozen VideoLLMs carry a linearly readable
-          <em>evidence-readiness</em> signal, labelled from timestamped evidence rather than from model output. It decodes in
-          all seven models of a shared byte-identical evaluation (AUROC 0.733&ndash;0.905 under the strictest not-ready
-          sampling, where a fitted clock is near chance), and a probe fitted without any of a benchmark family's footage
-          still reads that family. It is question-conditioned: on byte-identical windows, changing only the question
-          reverses the readout on 66.1% of pairs, while every question-blind control is at chance by construction. The
-          model can answer incorrectly and still encode readiness: AUROC remains 0.722 among wrong answers. Readiness also
-          beats uncertainty estimators and their supervised combination on latency-matched answer selection, and tracks
-          independent human judgments more closely than confidence. Released streaming triggers are also linear readouts,
-          yet a trained trigger read on its own base model's activations is approximately orthogonal to readiness and
-          decodes it far less accurately than a probe. We turn the readout into <em>Readiness Gating</em>, an answer-timing
-          policy that improves accuracy by up to +9.75&nbsp;pp at matched video duration with negligible computational
-          overhead. How much it gains varies with the accuracy headroom the task makes available: across 26 configurations
-          the gain tracks that headroom, and an intervention that moves it over identical pixels moves the gain with it.
-        </p>
       </div>
     </div>
   </section>
@@ -680,7 +678,6 @@
       <div class="prose">
         <p class="kicker">Cite</p>
         <h2>BibTeX</h2>
-        <!-- TODO: replace the journal field with the arXiv identifier once available. -->
         <div class="bibtex">
           <button class="copy-btn" type="button" id="copy-bib" aria-label="Copy BibTeX">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>
@@ -690,8 +687,9 @@
   title   = {Have I Seen Enough? Frozen Video-Language Models
              Encode Evidence Readiness},
   author  = {Ben-Ami, Dan and Cohen, Kobi and Baskin, Chaim},
-  journal = {arXiv preprint},
-  year    = {2026}
+  journal = {arXiv preprint arXiv:2610.08560},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2610.08560}
 }</code></pre>
         </div>
       </div>

@@ -234,6 +234,16 @@
     Object.keys(map).forEach(function (id) { var sct = document.getElementById(id); if (sct) io.observe(sct); });
   }
 
+  // The abstract is collapsed by default; the nav link (or a #abstract URL) opens it.
+  function abstractUI() {
+    var d = document.getElementById("abstract");
+    if (!d) return;
+    Array.prototype.forEach.call(document.querySelectorAll('a[href="#abstract"]'), function (a) {
+      a.addEventListener("click", function () { d.open = true; });
+    });
+    if (location.hash === "#abstract") d.open = true;
+  }
+
   function copyUI() {
     var btn = document.getElementById("copy-bib"), pre = document.getElementById("bib-text");
     if (!btn || !pre) return;
@@ -254,6 +264,7 @@
   function init() {
     themeUI();
     navUI();
+    abstractUI();
     copyUI();
     mount("chart-core", renderCore);
   }
