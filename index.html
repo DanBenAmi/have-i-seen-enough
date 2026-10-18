@@ -103,22 +103,18 @@
       </p>
 
       <figure class="teaser">
-        <!-- One render per page theme (tools/teaser/make_teaser_web.py); CSS shows the one matching the theme. -->
-        <a class="teaser-img teaser-light" href="static/images/teaser-light.png" target="_blank" rel="noopener" aria-label="Open the full-size teaser figure"><picture>
-            <source srcset="static/images/teaser-light.webp" type="image/webp">
-            <img src="static/images/teaser-light.png" width="2400" height="1351" loading="lazy"
-                 alt="Schematic. Streaming video frames of a kitchen feed a vision encoder and a transformer stack; the question asks for the banana's colour. Output probabilities favour the stereotype 'yellow' at about 0.95 until the purple bananas appear at t = 5, after which 'purple' rises to about 0.7. A readiness signal read from a middle layer stays near 0 before t = 5 and rises to about 1 afterwards.">
-          </picture></a>
-        <a class="teaser-img teaser-dark" href="static/images/teaser-dark.png" target="_blank" rel="noopener" aria-label="Open the full-size teaser figure"><picture>
-            <source srcset="static/images/teaser-dark.webp" type="image/webp">
-            <img src="static/images/teaser-dark.png" width="2400" height="1351" loading="lazy"
-                 alt="Schematic. Streaming video frames of a kitchen feed a vision encoder and a transformer stack; the question asks for the banana's colour. Output probabilities favour the stereotype 'yellow' at about 0.95 until the purple bananas appear at t = 5, after which 'purple' rises to about 0.7. A readiness signal read from a middle layer stays near 0 before t = 5 and rises to about 1 afterwards.">
-          </picture></a>
+        <!-- Silent, so it may autoplay; static/js/main.js pauses it for reduced-motion users. -->
+        <video class="teaser-video" width="1920" height="1080" poster="static/video_teaser/poster_16x9.jpg"
+               autoplay muted loop playsinline controls preload="auto"
+               aria-label="Animated teaser. A frozen VideoLLM watches a man unpack a grocery bag and is asked what colour the bananas are. Before they appear it answers yellow with about 0.9 confidence while a linear probe on layer 21 reads not ready (0.06). When purple bananas come out, readiness jumps to about 0.95 and the answer flips to purple. On a two-part question (colour, then where they end up), readiness rises to about 0.5 once the colour is seen and to about 1 once they go into the trash. The video ends with the paper's headline results.">
+          <source src="static/video_teaser/teaser_16x9.mp4" type="video/mp4">
+        </video>
         <figcaption>
           <strong>A model can be confident and unready at the same time.</strong>
-          Asked an object's colour before it enters the stream, the model answers confidently from prior alone;
-          a linear readout of its frozen residual stream reports that the evidence has not arrived.
-          <em>(Schematic; measured below.)</em>
+          Asked the bananas' colour before they enter the stream, the model answers <em>yellow</em> with almost 90% confidence
+          from prior alone, while a linear probe on its frozen residual stream reads <em>not ready</em>. When the bananas appear,
+          readiness jumps and the answer flips to <em>purple</em>; on a two-part question it climbs in steps as each fact arrives.
+          <em>(Illustrative values; measured below.)</em>
         </figcaption>
       </figure>
 

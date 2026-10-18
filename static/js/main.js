@@ -244,6 +244,14 @@
     if (location.hash === "#abstract") d.open = true;
   }
 
+  // The teaser autoplays; reduced-motion users get the poster and the controls instead.
+  function teaserUI() {
+    var v = document.querySelector(".teaser-video");
+    if (!v || !window.matchMedia || !window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.removeAttribute("autoplay");
+    v.pause();
+  }
+
   function copyUI() {
     var btn = document.getElementById("copy-bib"), pre = document.getElementById("bib-text");
     if (!btn || !pre) return;
@@ -265,6 +273,7 @@
     themeUI();
     navUI();
     abstractUI();
+    teaserUI();
     copyUI();
     mount("chart-core", renderCore);
   }

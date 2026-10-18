@@ -278,15 +278,10 @@ em { font-style: italic; }
 /* ---------- teaser ---------- */
 
 .teaser { margin: 32px auto 0; max-width: var(--teaser); }
-/* The teaser is rendered on the page background in both themes, so it needs no card. */
-.teaser-img { display: block; cursor: zoom-in; }
-.teaser-img img { width: 100%; }
-.teaser-dark { display: none; }
-:root[data-theme="dark"] .teaser-light { display: none; }
-:root[data-theme="dark"] .teaser-dark { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .teaser-light { display: none; }
-  :root:not([data-theme="light"]) .teaser-dark { display: block; }
+/* The video has its own dark background in both themes; the rounded frame keeps it from reading as a bleed. */
+.teaser-video {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+  border-radius: var(--radius); background: #0b1628; box-shadow: var(--shadow);
 }
 .paper-fig {
   background: #ffffff; border-radius: var(--radius); border: 1px solid var(--hair);
